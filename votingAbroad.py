@@ -1,13 +1,15 @@
+#
+#Author: Stephen James Connelly
+#Code for cleaning and merging Manifesto, VParty, and GPS datasets into Origin Party database for
+#voting abroad project with Chiara Superti and Beatrice Bonini.
+#
+#
+
 import pandas as pd
-from functools import partial
-import warnings
-import requests as r
 
-#warnings.filterwarnings("error")w
-#csvPippaNorris =
 
-    #"./Global Party Survey by Party CSV V1 10_Feb_2020.csv"
 
+#READING DATAFRAMES FROM CSVs ------------------------------------------------------
 dfVParty = pd.read_csv('/Users/danielaconnelly/Desktop/votingAbroad/V-Dem-CPD-Party-V2.csv')
 #reads database into pandas dataframe
 
@@ -20,43 +22,89 @@ dfGPS = pd.read_csv('/Users/danielaconnelly/Desktop/votingAbroad/Global Party Su
 dfpartyOrigin = pd.read_csv('/Users/danielaconnelly/Desktop/votingAbroad/Coding_List_Party_Origin.csv')
 #reads google drive database into pandas dataframe
 
+dfManifestoSA = pd.read_csv('/Users/danielaconnelly/Desktop/votingAbroad/MPDataset_MPDSSA2022a.csv')
+
+#------------------------------------------------------------------------------------------
 
 
-#MERGING MANIFESTO INTO PARTYORIGIN
-dfManifesto = dfManifesto[['countryname', 'party', 'per607', 'per608',
+#SELECT MANIFESTOSA COLUMNS TO KEEP------------------------------------------------------
+dfManifestoSA = dfManifestoSA[['countryname', 'party', 'edate', 'per607_1', 'per608_1',
+                               'per601_2', 'per602_2', 'per607_2','per608_2']]
+dfManifesto = dfManifesto[['countryname', 'party', 'edate', 'per607', 'per608',
                            'per7052', 'per601_2', 'per602_2', 'per607_2','per608_2', 'per7062']]
 
+#------------------------------------------------------------------------------------------
+
+
+
+
+# data = [['Karan',23],['Rohit',22],['Sahil',21],['Aryan',24]]
+# df = pd.Dataframe(data,columns=['Name','Age'])
+#
+# data2 = [['Joe',23],['Joe2',23],['Joe3',21],['Joe4',24]]
+# df2 = pd.Dataframe(data2,columns=['Name','Age'])
+#
+# df = pd.merge(df,df2[['Name','Age']], on=['Age'], how="inner")
+#
+#
+# print(df)
+
+# #CONVERTS IDENTIFER COLUMN TO STR. Error: Int64 and String conversion-----
+# dfManifesto["ID_Manifesto"] = dfManifesto["ID_Manifesto"].astype(str)
+# dfpartyOrigin["ID_Manifesto"] = dfpartyOrigin["ID_Manifesto"].astype(str)
+# #-------------------------------------------------------------------------
+
+#DATA CLEANING STEP------------------------------------------------------
+#convertes identifer column to str. Error: Int64 and String conversion-----
 # dfpartyOrigin = dfpartyOrigin[['ID_Manifesto', 'Party']]
 
-# dfManifesto = dfManifesto[['countryname', 'party', 'per607', 'per608']];
+#converts Manifesto's 'edate' column to simply the electon year
+dfManifestoSA['edate'] = pd.to_datetime(dfManifestoSA['edate'])
+dfManifestoSA['edate'] = dfManifestoSA['edate'].dt.strftime('%Y')
+dfManifesto['edate'] = pd.to_datetime(dfManifesto['edate'])
+dfManifesto['edate'] = dfManifesto['edate'].dt.strftime('%Y')
 
+#renames manifesto's Party identifer column into "ID_Manifesto" and date into Manifesto_Year
+dfManifestoSA = dfManifestoSA.rename(columns={"party":"ID_Manifesto"})
+dfManifestoSA = dfManifestoSA.rename(columns={"edate":"Manifesto_year"})
 dfManifesto = dfManifesto.rename(columns={"party":"ID_Manifesto"})
+dfManifesto = dfManifesto.rename(columns={"edate":"Manifesto_year"})
 
-dfpartyOrigin = dfpartyOrigin.drop(index=[0,1])
 
+
+dfManifestoSA["ID_Manifesto"] = dfManifestoSA["ID_Manifesto"].astype(str)
 dfManifesto["ID_Manifesto"] = dfManifesto["ID_Manifesto"].astype(str)
-
-
-#dfpartyOrigin['ID_Manifesto'] = pd.to_numeric(dfpartyOrigin['ID_Manifesto'], errors='coerce')
-
-#dfpartyOrigin = dfpartyOrigin.fillna(0)
-
-# dfManifesto = dfManifesto.replace([np.inf, -np.inf], 0)
-
 
 dfpartyOrigin["ID_Manifesto"] = dfpartyOrigin["ID_Manifesto"].astype(str)
 
-dfpartyOrigin = dfpartyOrigin.reindex(columns=['Name in DATA', 'Country', 'ID_Manifesto'])
+#removes rows 0 and 1, these cause errors.
+dfpartyOrigin = dfpartyOrigin.drop(index=[0,1])
+# dfManifesto = dfManifesto
+
+#dfpartyOrigin['ID_Manifesto'] = pd.to_numeric(dfpartyOrigin['ID_Manifesto'], errors='coerce')
+#dfpartyOrigin = dfpartyOrigin.fillna(0)
+# dfManifesto = dfManifesto.replace([np.inf, -np.inf], 0)
+#-------------------------------------------------------------------------
 
 
+# dfpartyOrigin = dfpartyOrigin.reindex(columns=['Name in DATA', 'Country', 'ID_Manifesto'])
 
-dfpartyOrigin = pd.merge(dfpartyOrigin,dfManifesto[["ID_Manifesto", "per607",
-                    "per608", "per7052", "per601_2", "per602_2", "per607_2",
-                      "per608_2", "per7062"]], on= 'ID_Manifesto', how="inner")
 
+#MERGING MANIFESTO INTO PARTYORIGIN ------------------------------------------------------
+
+dfpartyOrigin = pd.merge(dfpartyOrigin,dfManifestoSA[["ID_Manifesto", 'Manifesto_year', 'per607_1', 'per608_1',
+                                                      'per601_2', 'per602_2', 'per607_2','per608_2']], on=['ID_Manifesto'], how="inner")
+
+# # dfpartyOrigin = pd.merge(dfpartyOrigin,dfManifesto[["ID_Manifesto", 'Manifesto_year', "per607",
+# #                     "per608", "per7052", "per601_2", "per602_2", "per607_2",
+# #                       "per608_2", "per7062"]], on=['ID_Manifesto'], how="left")
+
+#------------------------------------------------------------------------------------------
+
+
+#EXPORTS DATAFRAME TO CSV----------------------------
 dfpartyOrigin.to_csv('partyorigin.csv', index=False)
-
-# dfpartyOrigin = dfpartyOrigin[["ID_Manifesto", "Party"]]
+#----------------------------------------------------
 
 
 # Print the merged dataset
