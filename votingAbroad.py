@@ -4,6 +4,10 @@
 #voting abroad project with Chiara Superti and Beatrice Bonini.
 #
 #
+import random
+
+import numpy as np
+# from random
 
 import pandas as pd
 
@@ -70,7 +74,7 @@ dfManifestoSA = dfManifestoSA.rename(columns={"edate":"Manifesto_year"})
 dfManifesto = dfManifesto.rename(columns={"party":"ID_Manifesto"})
 dfManifesto = dfManifesto.rename(columns={"edate":"Manifesto_year"})
 
-
+dfpartyOrigin['ID_Manifesto'] = dfpartyOrigin['ID_Manifesto'].apply(lambda l: l if not pd.isna(l) else random.random() * 1000 )
 
 dfManifestoSA["ID_Manifesto"] = dfManifestoSA["ID_Manifesto"].astype(str)
 dfManifesto["ID_Manifesto"] = dfManifesto["ID_Manifesto"].astype(str)
@@ -78,26 +82,13 @@ dfManifesto["ID_Manifesto"] = dfManifesto["ID_Manifesto"].astype(str)
 dfpartyOrigin["ID_Manifesto"] = dfpartyOrigin["ID_Manifesto"].astype(str)
 
 #removes rows 0 and 1, these cause errors.
-dfpartyOrigin = dfpartyOrigin.drop(index=[0,1])
-# dfManifesto = dfManifesto
-
-#dfpartyOrigin['ID_Manifesto'] = pd.to_numeric(dfpartyOrigin['ID_Manifesto'], errors='coerce')
-#dfpartyOrigin = dfpartyOrigin.fillna(0)
-# dfManifesto = dfManifesto.replace([np.inf, -np.inf], 0)
+dfpartyOrigin = dfpartyOrigin.drop(index=[0])
 #-------------------------------------------------------------------------
 
 
-# dfpartyOrigin = dfpartyOrigin.reindex(columns=['Name in DATA', 'Country', 'ID_Manifesto'])
-
-
-#MERGING MANIFESTO INTO PARTYORIGIN ------------------------------------------------------
-
-dfpartyOrigin = pd.merge(dfpartyOrigin,dfManifestoSA[["ID_Manifesto", 'Manifesto_year', 'per607_1', 'per608_1',
-                                                      'per601_2', 'per602_2', 'per607_2','per608_2']], on=['ID_Manifesto'], how="inner")
-
-# # dfpartyOrigin = pd.merge(dfpartyOrigin,dfManifesto[["ID_Manifesto", 'Manifesto_year', "per607",
-# #                     "per608", "per7052", "per601_2", "per602_2", "per607_2",
-# #                       "per608_2", "per7062"]], on=['ID_Manifesto'], how="left")
+#MERGING MANIFESTO INTO PARTYORIGIN------------------------------------------------------
+dfpartyOrigin = pd.merge(dfpartyOrigin,dfManifestoSA, on=['Manifesto_year', 'ID_Manifesto' ], how="left")
+dfpartyOrigin = pd.merge(dfpartyOrigin,dfManifesto, on=['Manifesto_year', 'ID_Manifesto'], how="left")
 
 #------------------------------------------------------------------------------------------
 
@@ -108,7 +99,8 @@ dfpartyOrigin.to_csv('partyorigin.csv', index=False)
 
 
 # Print the merged dataset
-print(dfpartyOrigin)
+# dfpartyOrigin = dfpartyOrigin[['Manifesto_year', 'ID_Manifesto']]
+print(dfpartyOrigin['ID_Manifesto'])
 
 
 
