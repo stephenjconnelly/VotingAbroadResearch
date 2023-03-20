@@ -1,11 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="349dd261-2645-4cac-aa04-179d789e40e1" name="Changes" comment="" />
+    <list default="true" id="349dd261-2645-4cac-aa04-179d789e40e1" name="Changes" comment="Fixed issue with bandaid. Merging Correctly.">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Coding_List_Party_Origin.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Coding_List_Party_Origin - Sheet1.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Global Party Survey by Party CSV V1 10_Feb_2020.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/votingAbroad.iml" beforeDir="false" afterPath="$PROJECT_DIR$/votingAbroad.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/votingAbroad.py" beforeDir="false" afterPath="$PROJECT_DIR$/votingAbroad.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2Lc2qXLkOBveFkAOF3s30Rd63AL" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -13,12 +34,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/VotingAbroadResearch" />
+      <recent name="$PROJECT_DIR$/venv" />
+      <recent name="$PROJECT_DIR$/venv/lib/python3.8" />
+      <recent name="$PROJECT_DIR$/venv/lib" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -28,6 +63,28 @@
       <option name="presentableId" value="Default" />
       <updated>1676156243234</updated>
     </task>
+    <task id="LOCAL-00001" summary="merging Manifesto, in progress">
+      <created>1677688282412</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1677688282412</updated>
+    </task>
+    <task id="LOCAL-00002" summary="merging issues continued.">
+      <created>1677876566745</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1677876566745</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fixed issue with bandaid. Merging Correctly.">
+      <created>1677884480715</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1677884480715</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -40,5 +97,11 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="merging Manifesto, in progress" />
+    <MESSAGE value="merging issues continued." />
+    <MESSAGE value="Fixed issue with bandaid. Merging Correctly." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed issue with bandaid. Merging Correctly." />
   </component>
 </project>

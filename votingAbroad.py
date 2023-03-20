@@ -4,109 +4,106 @@
 #voting abroad project with Chiara Superti and Beatrice Bonini.
 #
 #
-import random
-
-import numpy as np
-# from random
-
 import pandas as pd
+import numpy as np
 
 
 
 #READING DATAFRAMES FROM CSVs ------------------------------------------------------
+#reads database into pandas dataframe
 dfVParty = pd.read_csv('/Users/danielaconnelly/Desktop/votingAbroad/V-Dem-CPD-Party-V2.csv')
-#reads database into pandas dataframe
 
+#reads Manifesto database into pandas dataframe
 dfManifesto = pd.read_csv('/Users/danielaconnelly/Desktop/votingAbroad/MPDataset_MPDS2022a.csv')
-#reads database into pandas dataframe
-
-dfGPS = pd.read_csv('/Users/danielaconnelly/Desktop/votingAbroad/Global Party Survey by Party CSV V1 10_Feb_2020.csv')
-#reads database into pandas dataframe
-
-dfpartyOrigin = pd.read_csv('/Users/danielaconnelly/Desktop/votingAbroad/Coding_List_Party_Origin.csv')
-#reads google drive database into pandas dataframe
-
 dfManifestoSA = pd.read_csv('/Users/danielaconnelly/Desktop/votingAbroad/MPDataset_MPDSSA2022a.csv')
 
+#reads GPS database into pandas dataframe
+dfGPS = pd.read_csv('/Users/danielaconnelly/Desktop/votingAbroad/Global Party Survey by Party CSV V1 10_Feb_2020.csv')
+
+#reads google drive database into pandas dataframe
+dfpartyOrigin = pd.read_csv('/Users/danielaconnelly/Desktop/votingAbroad/Coding_List_Party_Origin - Sheet1.csv')
 #------------------------------------------------------------------------------------------
 
 
-#SELECT MANIFESTOSA COLUMNS TO KEEP------------------------------------------------------
+#SELECT MANIFESTO COLUMNS TO KEEP------------------------------------------------------
 dfManifestoSA = dfManifestoSA[['countryname', 'party', 'edate', 'per607_1', 'per608_1',
                                'per601_2', 'per602_2', 'per607_2','per608_2']]
-dfManifesto = dfManifesto[['countryname', 'party', 'edate', 'per607', 'per608',
+dfManifesto = dfManifesto[['party', 'edate', 'per607', 'per608',
                            'per7052', 'per601_2', 'per602_2', 'per607_2','per608_2', 'per7062']]
+#------------------------------------------------------------------------------------------
 
+#SELECT VPARTY COLUMNS TO KEEP------------------------------------------------------
+dfVParty = dfVParty[['v2paimmig_ord', 'pf_party_id', 'year', 'v2pariglef_ord']]
+#------------------------------------------------------------------------------------------
+
+#SELECT GPS COLUMNS TO KEEP------------------------------------------------------
+dfGPS = dfGPS[['ID_GPS', 'Elec_year', 'V10', 'V4_Ord']]
 #------------------------------------------------------------------------------------------
 
 
-
-
-# data = [['Karan',23],['Rohit',22],['Sahil',21],['Aryan',24]]
-# df = pd.Dataframe(data,columns=['Name','Age'])
-#
-# data2 = [['Joe',23],['Joe2',23],['Joe3',21],['Joe4',24]]
-# df2 = pd.Dataframe(data2,columns=['Name','Age'])
-#
-# df = pd.merge(df,df2[['Name','Age']], on=['Age'], how="inner")
-#
-#
-# print(df)
-
-# #CONVERTS IDENTIFER COLUMN TO STR. Error: Int64 and String conversion-----
-# dfManifesto["ID_Manifesto"] = dfManifesto["ID_Manifesto"].astype(str)
-# dfpartyOrigin["ID_Manifesto"] = dfpartyOrigin["ID_Manifesto"].astype(str)
-# #-------------------------------------------------------------------------
-
-#DATA CLEANING STEP------------------------------------------------------
-#convertes identifer column to str. Error: Int64 and String conversion-----
-# dfpartyOrigin = dfpartyOrigin[['ID_Manifesto', 'Party']]
-
-#converts Manifesto's 'edate' column to simply the electon year
+#converts Manifesto's 'edate' column, MM/DD/YYYY, to simply YYYY
 dfManifestoSA['edate'] = pd.to_datetime(dfManifestoSA['edate'])
 dfManifestoSA['edate'] = dfManifestoSA['edate'].dt.strftime('%Y')
 dfManifesto['edate'] = pd.to_datetime(dfManifesto['edate'])
 dfManifesto['edate'] = dfManifesto['edate'].dt.strftime('%Y')
+#-------------------------------------------------------------------------
 
-#renames manifesto's Party identifer column into "ID_Manifesto" and date into Manifesto_Year
+#renames manifesto unique identifer column into "ID_Manifesto" and date into Manifesto_Year
 dfManifestoSA = dfManifestoSA.rename(columns={"party":"ID_Manifesto"})
 dfManifestoSA = dfManifestoSA.rename(columns={"edate":"Manifesto_year"})
 dfManifesto = dfManifesto.rename(columns={"party":"ID_Manifesto"})
 dfManifesto = dfManifesto.rename(columns={"edate":"Manifesto_year"})
+#-------------------------------------------------------------------------
 
-dfpartyOrigin['ID_Manifesto'] = dfpartyOrigin['ID_Manifesto'].apply(lambda l: l if not pd.isna(l) else random.random() * 1000 )
+#renames V2Party unique identifer column and date column into 'V_party_year' and 'ID_V_party'
+dfVParty = dfVParty.rename(columns={"pf_party_id":"ID_V_party"})
+dfVParty = dfVParty.rename(columns={"year":"V_party_year"})
+#-------------------------------------------------------------------------
 
-dfManifestoSA["ID_Manifesto"] = dfManifestoSA["ID_Manifesto"].astype(str)
-dfManifesto["ID_Manifesto"] = dfManifesto["ID_Manifesto"].astype(str)
+#renames GPS unique identifer column and date column into 'GPS_Elec_year' and 'ID_GPS'
+dfGPS = dfGPS.rename(columns={"ID_GPS":"ID_GPS"})
+dfGPS = dfGPS.rename(columns={"Elec_year":"GPS_Elec_year"})
+#-------------------------------------------------------------------------
 
-dfpartyOrigin["ID_Manifesto"] = dfpartyOrigin["ID_Manifesto"].astype(str)
-
-#removes rows 0 and 1, these cause errors.
+#removes row 0, this cause errors----------------------------------------
 dfpartyOrigin = dfpartyOrigin.drop(index=[0])
 #-------------------------------------------------------------------------
 
+#converts partyorigin, manifesto, VParty columns to int64 and converts bad values (ie. 'N/A') to NaN values -------------------------------------------------
+dfpartyOrigin[["ID_Manifesto", "Manifesto_year"]]= dfpartyOrigin[["ID_Manifesto", "Manifesto_year"]].replace('N/A ', np.nan)
+dfpartyOrigin[["ID_Manifesto", "Manifesto_year"]]= dfpartyOrigin[["ID_Manifesto", "Manifesto_year"]].replace('1986-2017', np.nan)
+dfManifestoSA[["ID_Manifesto", "Manifesto_year"]] = dfManifestoSA[["ID_Manifesto", "Manifesto_year"]].astype('Int64')
+dfManifesto[["ID_Manifesto", "Manifesto_year"]] = dfManifesto[["ID_Manifesto", "Manifesto_year"]].astype('Int64')
+dfpartyOrigin[["ID_Manifesto", "Manifesto_year", 'V_party_year', 'ID_V_party' ]] = dfpartyOrigin[["ID_Manifesto",
+                                "Manifesto_year", 'V_party_year', 'ID_V_party']].astype('Int64')
+dfVParty[['V_party_year', 'ID_V_party' ]] = dfVParty[['V_party_year', 'ID_V_party']].astype('Int64')
+#-------------------------------------------------------------------------------------------------------------------------------
 
 #MERGING MANIFESTO INTO PARTYORIGIN------------------------------------------------------
-dfpartyOrigin = pd.merge(dfpartyOrigin,dfManifestoSA, on=['Manifesto_year', 'ID_Manifesto' ], how="left")
+dfpartyOrigin = pd.merge(dfpartyOrigin,dfManifestoSA, on=['Manifesto_year', 'ID_Manifesto'], how="left")
 dfpartyOrigin = pd.merge(dfpartyOrigin,dfManifesto, on=['Manifesto_year', 'ID_Manifesto'], how="left")
-
 #------------------------------------------------------------------------------------------
 
+#MERGING VPARTY INTO PARTYORIGIN------------------------------------------------------
+dfpartyOrigin = pd.merge(dfpartyOrigin,dfVParty, on=['V_party_year', 'ID_V_party'], how="left")
+#------------------------------------------------------------------------------------------
+
+#MERGING GPS INTO PARTYORIGIN------------------------------------------------------
+dfpartyOrigin = pd.merge(dfpartyOrigin,dfGPS, on=['ID_GPS', 'GPS_Elec_year'], how="left")
+#------------------------------------------------------------------------------------------
 
 #EXPORTS DATAFRAME TO CSV----------------------------
 dfpartyOrigin.to_csv('partyorigin.csv', index=False)
 #----------------------------------------------------
 
-
 # Print the merged dataset
-# dfpartyOrigin = dfpartyOrigin[['Manifesto_year', 'ID_Manifesto']]
 print(dfpartyOrigin['ID_Manifesto'])
 
 
 
 
 
-
+#Manifesto:
 #- multiculturalism : positive  -> per607
 #- multiculturalism : negative  -> per608
 #- Minorities Abroad: Positive -> per 7052
@@ -116,3 +113,12 @@ print(dfpartyOrigin['ID_Manifesto'])
 #- Multiculturalism: Immigrants Assimilation -> per608_2
 #- Underprivileged Minority Groups -> per705
 #- Refugees: Positive -> per7062
+
+#VParty
+#-Immigration : v2paimming
+#-Economic left-right scale: v2pariglef
+
+#GPS
+#-Immigration: v10
+#-Left-Right: V4_Ord
+
