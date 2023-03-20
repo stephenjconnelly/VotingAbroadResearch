@@ -84,7 +84,7 @@ dfpartyOrigin = pd.merge(dfpartyOrigin,dfManifestoSA, on=['Manifesto_year', 'ID_
 dfpartyOrigin = pd.merge(dfpartyOrigin,dfManifesto, on=['Manifesto_year', 'ID_Manifesto'], how="left")
 #------------------------------------------------------------------------------------------
 
-#MERGING VPARTY INTO PARTYORIGIN------------------------------------------------------
+#MERGING VPARTY INTO PARTYORIGIN----------------------------------------------------------
 dfpartyOrigin = pd.merge(dfpartyOrigin,dfVParty, on=['V_party_year', 'ID_V_party'], how="left")
 #------------------------------------------------------------------------------------------
 
