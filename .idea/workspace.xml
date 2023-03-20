@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="349dd261-2645-4cac-aa04-179d789e40e1" name="Changes" comment="Fixed issue with bandaid. Merging Correctly.">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="349dd261-2645-4cac-aa04-179d789e40e1" name="Changes" comment="Fully merged.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Coding_List_Party_Origin.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Coding_List_Party_Origin - Sheet1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Global Party Survey by Party CSV V1 10_Feb_2020.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/votingAbroad.iml" beforeDir="false" afterPath="$PROJECT_DIR$/votingAbroad.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/votingAbroad.py" beforeDir="false" afterPath="$PROJECT_DIR$/votingAbroad.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +78,28 @@
       <option name="project" value="LOCAL" />
       <updated>1677884480715</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fully merged.">
+      <created>1679337440323</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1679337440323</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Fully merged.">
+      <created>1679343874705</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1679343874706</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fully merged.">
+      <created>1679344156313</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1679344156313</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -102,6 +117,7 @@
     <MESSAGE value="merging Manifesto, in progress" />
     <MESSAGE value="merging issues continued." />
     <MESSAGE value="Fixed issue with bandaid. Merging Correctly." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed issue with bandaid. Merging Correctly." />
+    <MESSAGE value="Fully merged." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fully merged." />
   </component>
 </project>
